@@ -86,6 +86,7 @@ namespace HDT_Reconnector
 
             foreach (Process hsProcess in hsProcesses)
             {
+                Log.Info(String.Format("Found {0}, id {1}", hsProcess.ProcessName, hsProcess.Id));
                 hsPids.Add((uint)hsProcess.Id);
             }
 
@@ -96,9 +97,11 @@ namespace HDT_Reconnector
                     int remotePort = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(tcprows[i].remotePort, 0));
                     string remoteAddr = IPAddress.Parse(tcprows[i].RemoteAddress.ToString()).ToString();
 
+                    Log.Info(String.Format("Checking tcp connection: {0}:{1}", remoteAddr, remotePort));
+
                     if (remotePort == port && remoteAddr == addr)
                     {
-                        Log.Info(String.Format("TCP connection: {0}:{1}", remoteAddr, remotePort));
+                        Log.Info(String.Format("Found TCP connection: {0}:{1}", remoteAddr, remotePort));
 
                         hsTcpRow.localAddr = tcprows[i].localAddr;
                         hsTcpRow.localPort = tcprows[i].localPort;
